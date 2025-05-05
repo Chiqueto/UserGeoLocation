@@ -35,33 +35,40 @@ export default function Main() {
 
   return (
     <>
-      <TouchableOpacity style={styles.menuIcon}>
-        <Ionicons name="add" size={24} color="black" />
-      </TouchableOpacity>
-      <View style={styles.menuOpened}>
-        <View srtle={styles.menuHeader}>
-          <TouchableOpacity>
-            <Ionicons
-              name="close"
-              size={24}
-              color="red"
-              onPress={() => setIsMenuOpen(!isMenuOpen)}
-            />
-          </TouchableOpacity>
-          <Text style={styles.title}>Cadastrar novo usuário</Text>
-        </View>
-        <TextInput style={styles.input} placeholder="Nome" />
-        <TextInput style={styles.input} placeholder="Rua" />
-        <TextInput style={styles.input} placeholder="Número" />
-        <TextInput style={styles.input} placeholder="Cidade" />
-        <TextInput style={styles.input} placeholder="Estado" />
+      {!isMenuOpen && (
         <TouchableOpacity
-          style={styles.button}
+          style={styles.menuIcon}
           onPress={() => setIsMenuOpen(!isMenuOpen)}
         >
-          <Text style={styles.buttonText}>Cadastrar</Text>
+          <Ionicons name="add" size={24} color="black" />
         </TouchableOpacity>
-      </View>
+      )}
+
+      {isMenuOpen && (
+        <View style={styles.menuOpened}>
+          <View style={styles.menuHeader}>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <Ionicons name="close" size={24} color="red" />
+            </TouchableOpacity>
+            <Text style={styles.title}>Cadastrar novo usuário</Text>
+          </View>
+          <TextInput style={styles.input} placeholder="Nome" />
+          <TextInput style={styles.input} placeholder="Rua" />
+          <TextInput style={styles.input} placeholder="Número" />
+          <TextInput style={styles.input} placeholder="Cidade" />
+          <TextInput style={styles.input} placeholder="Estado" />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <Text style={styles.buttonText}>Cadastrar</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
       <MapView
         style={styles.map}
         initialRegion={{
@@ -145,6 +152,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: "center",
   },
+
   input: {
     height: 40,
     borderColor: "#ccc",
@@ -165,10 +173,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   menuHeader: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingBottom: 10,
+    position: "relative",
+  },
+  closeButton: {
+    position: "absolute",
+    top: 2,
+    left: 4,
+    zIndex: 1,
+    padding: 2,
+    backgroundColor: "#fcfcff",
+    borderRadius: 50,
   },
 });
